@@ -1,0 +1,41 @@
+.productContainer {
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+
+    display: grid;
+    gap: 4px;
+
+    padding: 8px;
+    max-width: 325px;
+    min-width: 225px;
+
+    transition: transform ease 150ms, background-color ease 300ms;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: var(--primary-background);
+    }
+}
+
+.productMainInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.productName {
+    text-align: left;
+}
+
+.productDescription {
+    text-align: justify;
+}
+
+.productPrice {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    color: white;
+    font-weight: 700;
+    padding: 4px 8px;
+}
