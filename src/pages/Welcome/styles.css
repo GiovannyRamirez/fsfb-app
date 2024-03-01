@@ -1,0 +1,74 @@
+.welcomeMain {
+    display: flex;
+    height: 100vh;
+
+    h1, h2 {
+        color: white;
+    }
+}
+
+.welcomeImage {
+    width: 50%;
+    display: flex;
+    align-items: center;
+
+    .welcomeImg {
+        width: 100%;
+    }
+}
+
+.welcomeContent {
+    background-color: var(--primary-color);
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-evenly;
+
+    width: 50%;
+    height: 100%;
+}
+
+.welcomeForm {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px 16px;
+
+    width: 65%;
+}
+
+.welcomeActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    width: 65%;
+
+    h4 {
+        color: white;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcomeMain {
+        flex-direction: column;
+    }
+
+    .welcomeImage {
+        width: 100%;
+        min-width: 280px;
+        
+        .welcomeImg {
+            margin: 0 auto;
+            width: 70%;
+            
+        }
+    }
+
+    .welcomeContent {
+        padding: 24px 0;
+        width: 100%;
+    }
+}
