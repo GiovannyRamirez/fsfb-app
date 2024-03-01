@@ -28,7 +28,7 @@ export const Welcome = () => {
   return (
     <div className="welcomeMain">
       <div className="welcomeImage">
-        <img className="welcomeImg" src={stockImg} />
+        <img className="welcomeImg" src={stockImg} alt="Welcome Img" />
       </div>
       <div className="welcomeContent">
         <div className="welcomeText">
