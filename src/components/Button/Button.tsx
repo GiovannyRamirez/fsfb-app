@@ -4,6 +4,7 @@ interface IButtonProps {
   id: string;
   label: string;
   variant?: "outlined" | "contained";
+  buttonType?: "warning" | "error" | "primary";
   disabled?: boolean;
   onClick: () => void;
 }
@@ -14,9 +15,16 @@ export const Button = ({
   variant = "outlined",
   disabled = false,
   onClick,
+  buttonType = "primary",
 }: IButtonProps) => {
   return (
-    <MuiButton id={id} variant={variant} disabled={disabled} onClick={onClick}>
+    <MuiButton
+      color={buttonType}
+      id={id}
+      variant={variant}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {label}
     </MuiButton>
   );
