@@ -46,7 +46,7 @@ export const RegisterForm = () => {
         value={confirmPassword}
         onChange={({ target }) => onChange(target.value, "confirmPassword")}
       />
-      <Button label="Registrarme" onClick={onSubmit} />
+      <Button id="registerButton" label="Registrarme" onClick={onSubmit} />
     </div>
   );
 };

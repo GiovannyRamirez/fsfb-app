@@ -43,6 +43,7 @@ export const Welcome = () => {
         <div className="welcomeActions">
           <h4>{footerText}</h4>
           <Button
+            id="changeFormTypeButton"
             label={footerButtonText}
             variant="contained"
             onClick={onChangeFormType}

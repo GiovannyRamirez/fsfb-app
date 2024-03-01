@@ -31,7 +31,7 @@ export const LoginForm = () => {
         value={password}
         onChange={({ target }) => onChange(target.value, "password")}
       />
-      <Button label="Iniciar sesión" onClick={onSubmit} />
+      <Button id="loginButton" label="Iniciar sesión" onClick={onSubmit} />
     </div>
   );
 };
