@@ -10,7 +10,8 @@ interface IInputProps {
   id: string;
   label: string;
   type?: "password" | "text" | "email";
-  value: string;
+  value: string | number;
+  multiline?: boolean;
   onChange: (e: any) => void;
 }
 
@@ -19,6 +20,7 @@ export const Input = ({
   label,
   type = "text",
   value,
+  multiline = false,
   onChange,
 }: IInputProps) => {
   const isPasswordType = type === "password";
@@ -32,6 +34,7 @@ export const Input = ({
       label={label}
       type={textType}
       value={value}
+      multiline={multiline}
       onChange={onChange}
       InputProps={{
         endAdornment: isPasswordType && (
