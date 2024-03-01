@@ -1,0 +1,17 @@
+.modalContent {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    width: 35vw;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .modalContent {
+        width: 80vw;
+    }
+}
