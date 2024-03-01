@@ -14,6 +14,7 @@
 
   --primary-color: #001698;
   --primary-black: #788591;
+  --primary-background: rgba(242, 244, 248, 1);
 }
 
 body {
@@ -26,6 +27,15 @@ body {
   cursor: default;
   margin: 0 !important;
   text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 8px;
 }
 
 @media (max-width: 768px) {
