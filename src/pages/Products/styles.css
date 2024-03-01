@@ -1,0 +1,34 @@
+.productsPage {
+    padding: 12px;
+}
+
+.productsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.productsEmpty {
+    margin: 0 auto;;
+    width: 75%;
+}
+
+.productsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 12px;
+    overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+    .productsHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .productsEmpty {
+        width: 95%;
+    }
+}
