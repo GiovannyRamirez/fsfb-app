@@ -1,0 +1,10 @@
+.formContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loginTitle {
+    color: var(--primary-black);
+    text-align: left;
+}
