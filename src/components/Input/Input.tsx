@@ -13,6 +13,7 @@ interface IInputProps {
   value: string | number;
   multiline?: boolean;
   onChange: (e: any) => void;
+  error?: string;
 }
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   value,
   multiline = false,
   onChange,
+  error = "",
 }: IInputProps) => {
   const isPasswordType = type === "password";
   const [showText, setShowText] = useState(false);
@@ -30,6 +32,8 @@ export const Input = ({
 
   return (
     <TextField
+      error={Boolean(error)}
+      helperText={error}
       id={id}
       label={label}
       type={textType}
