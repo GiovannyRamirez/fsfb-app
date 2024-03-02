@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import { ENDPOINTS } from "../constants";
+
 const productsApi = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: ENDPOINTS.BASE_URL,
 });
 
 productsApi.interceptors.request.use(async (config) => {
