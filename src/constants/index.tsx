@@ -4,10 +4,13 @@ export const URL_PAGES = {
 };
 
 export const ENDPOINTS = {
-  BASE_URL: "https://tx3002fj-3000.brs.devtunnels.ms/",
+  BASE_URL: import.meta.env.VITE_BACKEND_API,
   LOGIN: "/users/login",
   REGISTER: "/users/register",
-  PRODUCTS: "/products",
+  PRODUCTS: {
+    BASE: "/products",
+    ALL: "/products/all",
+  },
 };
 
 export const STATUS = {
