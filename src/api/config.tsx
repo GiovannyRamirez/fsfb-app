@@ -6,7 +6,7 @@ const productsApi = axios.create({
   baseURL: ENDPOINTS.BASE_URL,
 });
 
-productsApi.interceptors.request.use(async (config) => {
+productsApi.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
   if (token) {
