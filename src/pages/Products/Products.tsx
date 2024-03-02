@@ -105,7 +105,14 @@ export const Products = () => {
         />
       </section>
       <section className="productsList">
-        {!products.length ? (
+        {loading ? (
+          <div className="productsEmpty">
+            <EmptyState
+              message="Estamos procesando tu solicitud"
+              showImg={false}
+            />
+          </div>
+        ) : !products.length ? (
           <div className="productsEmpty">
             <EmptyState message="Aún no tienes productos, empieza añadiendo uno" />
           </div>
