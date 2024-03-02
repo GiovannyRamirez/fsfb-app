@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+
+import { URL_PAGES } from "../../constants";
 
 import { RegisterForm } from "../../components/RegisterForm/RegisterForm";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
@@ -10,6 +13,10 @@ import "./styles.css";
 
 export const Welcome = () => {
   const [formType, setFormType] = useState("login");
+
+  const token = localStorage.getItem("token");
+  if (token) return <Navigate to={URL_PAGES.PRODUCTS} />;
+
   const isLoginFormType = formType === "login";
 
   const renderForm = {
