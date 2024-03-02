@@ -5,6 +5,9 @@ import { IProduct } from "../../interfaces";
 
 import { useForm } from "../../hooks/useForm";
 
+import { ProductSchema } from "../../utils/formSchemas";
+import { transformPrice } from "../../utils/index";
+
 import { deleteProduct, postProduct, putProduct } from "../../api/requests";
 import { GET_ERROR } from "../../constants";
 
@@ -33,6 +36,13 @@ export const ProductForm = ({
   const [error, setError] = useState<boolean | string>("");
   const [confirmDeletion, setConfirmDeletion] = useState(false);
 
+  const initialFormErrors = {
+    name: "",
+    description: "",
+    price: "",
+  };
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+
   const { productName, productDescription, productPrice, onChange } = useForm({
     productName: name,
     productDescription: description,
@@ -42,21 +52,34 @@ export const ProductForm = ({
   const onSubmit = async () => {
     setLoading(true);
     try {
-      if (id) {
-        const { data } = await putProduct(Number(id), {
-          name: productName,
-          description: productDescription,
-          price: productPrice,
-        });
+      const body = {
+        name: productName,
+        description: productDescription,
+        price: productPrice,
+      };
 
+      const parsedPrice = transformPrice(Number(productPrice));
+
+      const validation = ProductSchema.safeParse({
+        ...body,
+        price: parsedPrice,
+      });
+      if (!validation.success) {
+        const formattedErrors = validation.error.format();
+
+        return setFormErrors({
+          name: formattedErrors.name?._errors[0] ?? "",
+          description: formattedErrors.description?._errors[0] ?? "",
+          price: formattedErrors.price?._errors[0] ?? "",
+        });
+      }
+      setFormErrors(initialFormErrors);
+
+      if (id) {
+        const { data } = await putProduct(Number(id), body);
         updateProducts(data.productInfo, "update");
       } else {
-        const { data } = await postProduct({
-          name: productName,
-          description: productDescription,
-          price: productPrice,
-        });
-
+        const { data } = await postProduct(body);
         updateProducts(data.productInfo, "create");
       }
     } catch (err: any) {
@@ -82,6 +105,8 @@ export const ProductForm = ({
 
   const buttonText = id ? "Editar" : "Añadir";
 
+  const isButtonDisabled = !productName || !productDescription || !productPrice;
+
   return (
     <div className="productForm">
       <Loader loading={loading} />
@@ -89,6 +114,7 @@ export const ProductForm = ({
         id="productNameInput"
         label="Nombre del producto"
         value={productName}
+        error={formErrors.name}
         onChange={({ target }) => onChange(target.value, "productName")}
       />
       <Input
@@ -96,15 +122,22 @@ export const ProductForm = ({
         label="Descripción"
         multiline
         value={productDescription}
+        error={formErrors.description}
         onChange={({ target }) => onChange(target.value, "productDescription")}
       />
       <Input
         id="productPriceInput"
         label="Precio"
         value={productPrice}
+        error={formErrors.price}
         onChange={({ target }) => onChange(target.value, "productPrice")}
       />
-      <Button id="productButton" label={buttonText} onClick={onSubmit} />
+      <Button
+        disabled={isButtonDisabled}
+        id="productButton"
+        label={buttonText}
+        onClick={onSubmit}
+      />
       {id && (
         <Button
           id="deleteProductButton"
