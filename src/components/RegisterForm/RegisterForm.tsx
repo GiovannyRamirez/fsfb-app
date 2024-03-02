@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { IAuthResponse } from "../../interfaces";
-
-import productsApi from "../../api";
 import { useForm } from "../../hooks/useForm";
-import { ENDPOINTS, GET_ERROR, STATUS } from "../../constants";
+
+import { registerUser } from "../../api/requests";
+import { GET_ERROR, STATUS, URL_PAGES } from "../../constants";
 
 import { Loader } from "../Loader/Loader";
 import { Button } from "../Button/Button";
@@ -14,6 +14,8 @@ import { Modal } from "../Modal/Modal";
 import "./styles.css";
 
 export const RegisterForm = () => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean | string>("");
 
@@ -27,14 +29,11 @@ export const RegisterForm = () => {
   const onSubmit = async () => {
     setLoading(true);
     try {
-      const { data, status } = await productsApi.post<IAuthResponse>(
-        ENDPOINTS.REGISTER,
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      const { data, status } = await registerUser({
+        name,
+        email,
+        password,
+      });
 
       if (status === STATUS.ACCEPTED) {
         const errorMessage = GET_ERROR(String(data.error));
@@ -48,6 +47,7 @@ export const RegisterForm = () => {
 
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", userToSave);
+        navigate(URL_PAGES.PRODUCTS);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { IAuthResponse } from "../../interfaces/index";
-
-import productsApi from "../../api";
 import { useForm } from "../../hooks/useForm";
-import { ENDPOINTS, GET_ERROR } from "../../constants";
+
+import { loginUser } from "../../api/requests";
+import { GET_ERROR, URL_PAGES } from "../../constants";
 
 import { Loader } from "../Loader/Loader";
 import { Button } from "../Button/Button";
@@ -14,6 +14,8 @@ import { Modal } from "../Modal/Modal";
 import "./styles.css";
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean | string>("");
 
@@ -25,7 +27,7 @@ export const LoginForm = () => {
   const onSubmit = async () => {
     setLoading(true);
     try {
-      const { data } = await productsApi.post<IAuthResponse>(ENDPOINTS.LOGIN, {
+      const { data } = await loginUser({
         email,
         password,
       });
@@ -38,6 +40,7 @@ export const LoginForm = () => {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", userToSave);
+      navigate(URL_PAGES.PRODUCTS);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const errorMessage = GET_ERROR(err?.response?.data?.error);
