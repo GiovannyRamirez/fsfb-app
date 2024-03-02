@@ -1,38 +1,16 @@
-import { Button } from "../../components/Button/Button";
-import { EmptyState } from "../../components/EmptyState/EmptyState";
-import { ProductCard } from "../../components/ProductCard/ProductCard";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 
-const products = [
-  {
-    id_product: 1,
-    name: "Product Test with large name",
-    description: "Product description updated again",
-    price: 15,
-  },
-  {
-    id_product: 2,
-    name: "Product Test 2",
-    description: "Product description",
-    price: 15,
-  },
-  {
-    id_product: 3,
-    name: "Product Test 3",
-    description: "Product description updated again",
-    price: 12,
-  },
-];
+import { IProduct } from "../../interfaces";
 
-interface IProduct {
-  id_product: string | number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-import { useState } from "react";
+import { getAllProducts } from "../../api/requests";
+import { GET_ERROR, STATUS } from "../../constants";
 
 import { ProductForm } from "../../components/ProductForm/ProductForm";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
+import { EmptyState } from "../../components/EmptyState/EmptyState";
+import { Button } from "../../components/Button/Button";
+import { Loader } from "../../components/Loader/Loader";
 import { Modal } from "../../components/Modal/Modal";
 
 import "./styles.css";
@@ -42,26 +20,82 @@ export const Products = () => {
     id_product: "",
     name: "",
     description: "",
-    price: 0,
+    price: "",
   };
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<boolean | string>("");
 
   const [showModal, setShowModal] = useState(false);
   const [formContent, setFormContent] = useState<IProduct>(initialProduct);
 
-  const onEditProduct = (product: IProduct) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+
+  const onEditProduct = async (product: IProduct) => {
     setShowModal(true);
     setFormContent(product);
   };
 
-  const onAddProduct = () => setShowModal(true);
+  const onAddProduct = () => {
+    setShowModal(true);
+  };
 
   const onCloseModal = () => {
     setShowModal(false);
     setFormContent(initialProduct);
   };
 
+  const getProducts = async () => {
+    setLoading(true);
+    try {
+      const { data, status } = await getAllProducts();
+
+      if (status === STATUS.EMPTY) {
+        setProducts([]);
+      } else {
+        setProducts(data.products);
+      }
+    } catch (err: any) {
+      const errorMessage = GET_ERROR(err?.response?.data?.error);
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onCloseModalError = async () => {
+    setError(false);
+    await getProducts();
+  };
+
+  const onUpdateProducts = (productInfo: IProduct, type: string) => {
+    if (type === "create") {
+      setProducts([productInfo, ...products]);
+    } else if (type === "update") {
+      const newProducts = products.filter(
+        (prd: IProduct) =>
+          Number(prd.id_product) !== Number(productInfo.id_product)
+      );
+      setProducts([productInfo, ...newProducts]);
+    }
+    onCloseModal();
+  };
+
+  const onDeleteProduct = (id: number) => {
+    const newProducts = products.filter(
+      (prd: IProduct) => Number(prd.id_product) !== Number(id)
+    );
+    setProducts([...newProducts]);
+    onCloseModal();
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <div className="productsPage">
+      <Loader loading={loading} />
       <section className="productsHeader">
         <h3 className="productsTitle">Listado de tus productos</h3>
         <Button
@@ -80,7 +114,7 @@ export const Products = () => {
             return (
               <ProductCard
                 key={id_product}
-                id={id_product}
+                id_product={id_product}
                 name={name}
                 description={description}
                 price={price}
@@ -94,7 +128,15 @@ export const Products = () => {
       </section>
 
       <Modal open={showModal} onClose={onCloseModal}>
-        <ProductForm {...formContent} />
+        <ProductForm
+          {...formContent}
+          updateProducts={onUpdateProducts}
+          removeProduct={onDeleteProduct}
+        />
+      </Modal>
+
+      <Modal open={Boolean(error)} onClose={onCloseModalError}>
+        <h3 className="error">{error}</h3>
       </Modal>
     </div>
   );

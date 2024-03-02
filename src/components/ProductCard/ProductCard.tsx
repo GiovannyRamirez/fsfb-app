@@ -1,25 +1,23 @@
+import { IProduct } from "../../interfaces";
+
 import { transformPrice } from "../../utils";
 
 import { Button } from "../Button/Button";
 
 import "./styles.css";
 
-interface IProductCardProps {
-  id: string | number;
-  name: string;
-  description: string;
-  price: number;
+interface IProductCardProps extends IProduct {
   onButtonClick: () => void;
 }
 
 export const ProductCard = ({
-  id,
+  id_product: id,
   name,
   description,
   price,
   onButtonClick,
 }: IProductCardProps) => {
-  const productPrice = transformPrice(price);
+  const productPrice = transformPrice(Number(price));
 
   return (
     <div className="productContainer">
