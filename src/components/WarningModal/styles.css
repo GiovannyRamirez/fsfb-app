@@ -1,0 +1,21 @@
+.warningModal {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.warningButtons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .warningButtons {
+        grid-template-columns: unset;
+        grid-template-rows: repeat(2, 1fr);
+        gap: 8px;
+        width: 100%;
+    }
+}
