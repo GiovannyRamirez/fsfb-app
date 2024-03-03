@@ -1,28 +1,13 @@
 import productsApi from "./config";
 
 import {
-  IAuthLoginRequest,
-  IAuthRegisterRequest,
-  IAuthResponse,
   IBasicResponse,
   IProductProps,
   IProductResponse,
   IProductsResponse,
-} from "../interfaces";
+} from "../../interfaces";
 
-import { ENDPOINTS } from "../constants";
-
-export const registerUser = async (data: IAuthRegisterRequest) => {
-  const response = await productsApi.post<IAuthResponse>(ENDPOINTS.LOGIN, data);
-
-  return response;
-};
-
-export const loginUser = async (data: IAuthLoginRequest) => {
-  const response = await productsApi.post<IAuthResponse>(ENDPOINTS.LOGIN, data);
-
-  return response;
-};
+import { ENDPOINTS } from "../../constants";
 
 export const getAllProducts = async () => {
   const response = await productsApi.get<IProductsResponse>(

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ENDPOINTS, STATUS } from "../constants";
+import { ENDPOINTS, STATUS } from "../../constants";
 
 const productsApi = axios.create({
   baseURL: ENDPOINTS.BASE_URL,
@@ -17,14 +17,17 @@ productsApi.interceptors.request.use((config) => {
 });
 
 productsApi.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (err) => {
     if ([STATUS.UNAUTHORIZED].includes(err?.response?.status)) {
       alert("Sesión expirada");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
       location.reload();
     }
+
+    return err;
   }
 );
 
