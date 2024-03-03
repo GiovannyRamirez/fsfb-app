@@ -9,7 +9,7 @@ import {
 import { ENDPOINTS } from "../../constants";
 
 export const registerUser = async (data: IAuthRegisterRequest) => {
-  const response = await authApi.post<IAuthResponse>(ENDPOINTS.LOGIN, data);
+  const response = await authApi.post<IAuthResponse>(ENDPOINTS.REGISTER, data);
 
   return response;
 };
