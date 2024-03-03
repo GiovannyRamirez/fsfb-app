@@ -5,7 +5,7 @@ import { useForm } from "../../hooks/useForm";
 
 import { LoginSchema } from "../../utils/formSchemas";
 
-import { loginUser } from "../../api/requests";
+import { loginUser } from "../../api/auth/requests";
 import { GET_ERROR, URL_PAGES } from "../../constants";
 
 import { Loader } from "../Loader/Loader";

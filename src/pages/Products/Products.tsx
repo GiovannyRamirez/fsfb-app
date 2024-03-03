@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { IProduct } from "../../interfaces";
 
-import { getAllProducts } from "../../api/requests";
+import { getAllProducts } from "../../api/products/requests";
 import { GET_ERROR, STATUS } from "../../constants";
 
 import { ProductForm } from "../../components/ProductForm/ProductForm";

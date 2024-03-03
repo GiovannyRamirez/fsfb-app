@@ -8,7 +8,7 @@ import { useForm } from "../../hooks/useForm";
 import { ProductSchema } from "../../utils/formSchemas";
 import { transformPrice } from "../../utils/index";
 
-import { deleteProduct, postProduct, putProduct } from "../../api/requests";
+import { deleteProduct, postProduct, putProduct } from "../../api/products/requests";
 import { GET_ERROR } from "../../constants";
 
 import { WarningModal } from "../WarningModal/WarningModal";
