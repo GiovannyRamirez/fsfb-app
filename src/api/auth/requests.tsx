@@ -8,14 +8,8 @@ import {
 
 import { ENDPOINTS } from "../../constants";
 
-export const registerUser = async (data: IAuthRegisterRequest) => {
-  const response = await authApi.post<IAuthResponse>(ENDPOINTS.REGISTER, data);
+export const registerUser = async (data: IAuthRegisterRequest) =>
+  await authApi.post<IAuthResponse>(ENDPOINTS.REGISTER, data);
 
-  return response;
-};
-
-export const loginUser = async (data: IAuthLoginRequest) => {
-  const response = await authApi.post<IAuthResponse>(ENDPOINTS.LOGIN, data);
-
-  return response;
-};
+export const loginUser = async (data: IAuthLoginRequest) =>
+  await authApi.post<IAuthResponse>(ENDPOINTS.LOGIN, data);
